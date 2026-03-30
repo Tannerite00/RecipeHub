@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import { supabase, type Recipe } from '../lib/supabase';
+import { parseISO8601Duration } from '../lib/utils';
 
 export function RecipeListPage() {
   const navigate = useNavigate();
@@ -88,11 +89,11 @@ export function RecipeListPage() {
                 <div className="flex gap-4 text-sm text-gray-700">
                   <div>
                     <span className="font-medium">Prep:</span>
-                    <p className="text-gray-600">{recipe.prep_time}</p>
+                    <p className="text-gray-600">{parseISO8601Duration(recipe.prep_time)}</p>
                   </div>
                   <div>
                     <span className="font-medium">Cook:</span>
-                    <p className="text-gray-600">{recipe.cook_time}</p>
+                    <p className="text-gray-600">{parseISO8601Duration(recipe.cook_time)}</p>
                   </div>
                 </div>
               </button>

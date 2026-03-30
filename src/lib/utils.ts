@@ -1,19 +1,17 @@
 export function parseISO8601Duration(duration: string): string {
-  const regex = /PT(\d+H)?(\d+M)?/;
-  const matches = duration.match(regex);
+  if (!duration || duration === 'PT0D0H0M') return 'N/A';
 
-  if (!matches) return 'N/A';
+  const hoursMatch = duration.match(/(\d+)H/);
+  const minutesMatch = duration.match(/(\d+)M/);
 
-  let time = '';
-  if (matches[1]) {
-    time += matches[1];
-  }
-  if (matches[2]) {
-    if (time) time += ' ';
-    time += matches[2];
-  }
+  const hours = hoursMatch ? parseInt(hoursMatch[1]) : 0;
+  const minutes = minutesMatch ? parseInt(minutesMatch[1]) : 0;
 
-  return time || 'N/A';
+  const parts = [];
+  if (hours > 0) parts.push(`${hours}h`);
+  if (minutes > 0) parts.push(`${minutes}m`);
+
+  return parts.length > 0 ? parts.join(' ') : 'N/A';
 }
 
 export function getWeekDates(startDate: Date) {
